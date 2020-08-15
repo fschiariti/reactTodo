@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route} from 'react-router-dom'
 import Header from './components/Layout/Header'
 import Todos from './components/Todos'
+import SearchTodo from './components/SearchTodo'
 import AddTodo from './components/AddTodo'
 import About from './components/pages/About'
 //import { v4 as uuidv4 } from 'uuid';
@@ -60,7 +61,7 @@ class App extends Component {
   delTodo = (id) => {
     console.log(id);    
 
-    axios.delete('https://jsonplaceholder.typicode.com/todos/${id}')
+    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
     .then(res => this.setState({ todos: [...this.state.todos.filter(todo => 
       todo.id !==id)] }))
 
@@ -82,6 +83,28 @@ class App extends Component {
     
   }
 
+  //Search todo
+
+  searchTodo = (s) => {
+    console.log(s);
+
+    let searchTodo = {
+      title: s,
+      completed: false
+    }
+
+    if (searchTodo.title) {
+      this.setState({ todos: this.state.todos.filter(t=> t.title.indexOf(searchTodo.title) > -1)
+      });
+
+    } else {
+      axios.get('https://jsonplaceholder.typicode.com/todos?_limit=5')
+      .then(res => this.setState({ todos: res.data}))  
+    }
+
+    
+
+  }
 
   render() {
     //console.log(this.state.todos);
@@ -92,6 +115,7 @@ class App extends Component {
           <Header />
           <Route exact path="/" render={props => (
             <React.Fragment>
+              <SearchTodo searchTodo={this.searchTodo} />
               <AddTodo addTodo={this.addTodo} />
               <Todos todos={this.state.todos} markComplete= 
               {this.markComplete} delTodo={this.delTodo}  />
