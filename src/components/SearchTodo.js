@@ -12,10 +12,10 @@ export class SearchTodo extends Component {
         this.setState({[e.target.name]: e.target.value});
         this.props.searchTodo(this.state.buscar);
     }
+
     onSubmit = (e) => {
         e.preventDefault();
         this.props.searchTodo(this.state.buscar);
-//        this.setState({ title: ''});
     }
 
     render() {

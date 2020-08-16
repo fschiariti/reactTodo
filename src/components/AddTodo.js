@@ -18,6 +18,12 @@ export class AddTodo extends Component {
         this.setState({ title: ''});
     }
 
+    onClick = (e) => {
+        e.preventDefault();
+        this.props.cancelAddTodo();
+        this.setState({ title: ''});
+    }
+
     componentWillReceiveProps(props) {
         this.setState({
             title: props.title, id: props.id
@@ -38,6 +44,12 @@ export class AddTodo extends Component {
                 <input type="submit" 
                 value= {this.props.title ? "Update" : "Add"} 
                 className="btn" 
+                style={{flex: '1' }}
+                />
+                <input type="button" 
+                value= "Cancel" 
+                className="btn" 
+                onClick={this.onClick}
                 style={{flex: '1' }}
                 />
             </form>
