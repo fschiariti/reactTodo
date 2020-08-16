@@ -9,24 +9,23 @@ export class SearchTodo extends Component {
     }
 
     onChange = (e) => {
-        this.setState({[e.target.name]: e.target.value});
-        this.props.searchTodo(this.state.buscar);
+        this.setState({[e.target.name]: e.target.value})
     }
 
-    onSubmit = (e) => {
-        e.preventDefault();
-        this.props.searchTodo(this.state.buscar);
+    onKeyUp = (e) => {
+        this.props.searchTodo(this.state.buscar)
     }
 
     render() {
         return (
-            <form onSubmit={this.onSubmit} style={{ display: 'flex'}}>
+            <form style={{ display: 'flex'}}>
                 <input type="text" 
                 name="buscar" 
                 style = {{flex: '10', padding: '5px'}}
                 placeholder="Search todo..."  autoComplete="off"
                 value={this.state.buscar}
                 onChange={this.onChange}
+                onKeyUp={this.onKeyUp}
                 />
             </form>
         )

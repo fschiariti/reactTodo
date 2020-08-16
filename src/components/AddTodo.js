@@ -48,7 +48,7 @@ export class AddTodo extends Component {
                 />
                 <input type="button" 
                 value= "Cancel" 
-                className="btn" 
+                className="btnCancel" 
                 onClick={this.onClick}
                 style={{flex: '1' }}
                 />

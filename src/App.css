@@ -22,12 +22,25 @@ a {
 .btn {
   display: inline-block;
   border: none;
-  background: #555;
+  background: green;
+  color: #fff;
+  padding: 7px 20px;
+  cursor: pointer;
+}
+
+.btnCancel {
+  display: inline-block;
+  border: none;
+  background: red;
   color: #fff;
   padding: 7px 20px;
   cursor: pointer;
 }
 
 .btn:hover {
-  background: #666;
+  background:green;
+}
+
+.btnCancel:hover {
+  background: rgb(255, 72, 0);
 }

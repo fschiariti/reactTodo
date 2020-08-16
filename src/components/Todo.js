@@ -36,6 +36,7 @@ class Todo extends Component {
 //Delete todo
 
   delTodo = (id) => {
+    
     console.log(id);    
 
     axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
@@ -112,9 +113,9 @@ class Todo extends Component {
     return (
       <div>
         <SearchTodo searchTodo={this.searchTodo} />
-        <AddTodo addTodo={this.addTodo} id={this.state.id}  title={this.state.title} />
+        <AddTodo addTodo={this.addTodo} id={this.state.id} cancelAddTodo={this.cancelAddTodo} title={this.state.title} />
         <Todos todos={this.state.todos} markComplete= 
-        {this.markComplete} delTodo={this.delTodo} editTodo={this.editTodo} cancelAddTodo={this.cancelAddTodo} />
+        {this.markComplete} delTodo={this.delTodo} editTodo={this.editTodo}  />
       </div>
     );
   }
