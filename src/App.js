@@ -10,6 +10,8 @@ import './App.css'
 import axios from 'axios'
 
 
+
+
 class App extends Component {
 
   state = {
@@ -32,7 +34,9 @@ class App extends Component {
       },
     ]  
     */
-    todos: []  
+    todos: [],
+    title: "",
+    id: ""
   }
 
   componentDidMount() {
@@ -69,17 +73,31 @@ class App extends Component {
 
   //Add todo
 
-  addTodo = (title) => {
-    console.log(title);
+  addTodo = (t) => {
+    console.log(t.title);
 
     let newTodo = {
-      title: title,
+      title: t.title,
+      id: t.id,
       completed: false
     }
 
-    axios.post('https://jsonplaceholder.typicode.com/todos', newTodo )
-    .then(res => this.setState( {todos: 
-      [...this.state.todos, res.data] } ));
+    if (t.id === "") {
+      axios.post('https://jsonplaceholder.typicode.com/todos', newTodo )
+      .then(res => this.setState( {id: "", title: '', todos: 
+        [...this.state.todos, res.data] } ));  
+    } else {
+      axios.put(`https://jsonplaceholder.typicode.com/todos/${t.id}`, newTodo )
+      .then(res => this.setState( {id: "", title: '', todos: 
+          this.state.todos.map(todo => {
+            if (todo.id ===t.id) {
+              todo.title = t.title;
+            }
+      
+            return todo;
+          })
+     } ));  
+    }
     
   }
 
@@ -106,6 +124,14 @@ class App extends Component {
 
   }
 
+  editTodo = (id, title) => {
+    console.log(id) 
+    this.setState({ id: id, title : title })   
+  }
+
+
+
+
   render() {
     //console.log(this.state.todos);
     return (
@@ -116,10 +142,10 @@ class App extends Component {
           <Route exact path="/" render={props => (
             <React.Fragment>
               <SearchTodo searchTodo={this.searchTodo} />
-              <AddTodo addTodo={this.addTodo} />
+              <AddTodo addTodo={this.addTodo} id={this.state.id}  title={this.state.title} />
               <Todos todos={this.state.todos} markComplete= 
-              {this.markComplete} delTodo={this.delTodo}  />
-            </React.Fragment>
+              {this.markComplete} delTodo={this.delTodo} editTodo={this.editTodo} />
+            </React.Fragment>            
           )} />
           <Route path="/about" component={About} />
         </div>

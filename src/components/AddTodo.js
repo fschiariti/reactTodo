@@ -6,17 +6,23 @@ export class AddTodo extends Component {
 
 
     state = {
-        title: '' 
+        title: '', 
+        id: ''
     }
 
     onChange = (e) => this.setState({[e.target.name]: e.target.value});
 
     onSubmit = (e) => {
         e.preventDefault();
-        this.props.addTodo(this.state.title);
+        this.props.addTodo(this.state);
         this.setState({ title: ''});
     }
 
+    componentWillReceiveProps(props) {
+        this.setState({
+            title: props.title, id: props.id
+        })
+    }
 
     render() {
         return (
@@ -24,16 +30,16 @@ export class AddTodo extends Component {
                 <input type="text" 
                 name="title" 
                 style = {{flex: '10', padding: '5px'}}
-                placeholder="Add todo..." autoComplete="off"
+                placeholder={this.props.title ? "Edit todo..." : "Add todo..."} 
+                autoComplete="off"
                 value={this.state.title}
                 onChange={this.onChange}
                 />
                 <input type="submit" 
-                value="Submit" 
+                value= {this.props.title ? "Update" : "Add"} 
                 className="btn" 
                 style={{flex: '1' }}
                 />
-
             </form>
         )
     }
