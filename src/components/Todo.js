@@ -37,12 +37,16 @@ class Todo extends Component {
 
   delTodo = (id) => {
     
-    console.log(id);    
+    const r = window.confirm("Do you really want to delete?"); 
+    
+    if(r)
+    {  
+      console.log(id);    
 
-    axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
-    .then(res => this.setState({ todos: [...this.state.todos.filter(todo => 
-      todo.id !==id)] }))
-
+      axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
+      .then(res => this.setState({ todos: [...this.state.todos.filter(todo => 
+        todo.id !==id)] }))
+    }
   }
 
   //Add todo
